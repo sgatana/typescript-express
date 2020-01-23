@@ -1,29 +1,8 @@
-import express from 'express';
-import { Routes } from './routes';
-import mongoose from 'mongoose';
+import { app } from './server';
 
-class App {
-  public app: express.Application;
-  public routes: Routes = new Routes();
-  public mongoUrl: string =
-    'mongodb+srv://admin:admin@cluster0-xmgzw.mongodb.net/test?retryWrites=true&w=majority';
+const port = process.env.PORT || 5000;
 
-  constructor() {
-    this.app = express();
-    this.config();
-    this.routes.routes(this.app);
-    this.mongoSetUp();
-  }
-
-  private config(): void {
-    this.app.use(express.json());
-  }
-  private mongoSetUp(): void {
-    mongoose.connect(this.mongoUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-  }
-}
-
-export default new App().app;
+app.listen(port, () => {
+  // tslint:disable-next-line: no-console
+  console.log(`server running on port ${port}`);
+});
